@@ -42,6 +42,11 @@ Buat file controller menggunakan CLI : php spark make:controller page
   - View Pages (contoh about.php)
   ![image](https://github.com/user-attachments/assets/15bc7700-9894-4389-b35e-72e4ed20c507)
 
+hasil dari view about.php :
+
+![image](https://github.com/user-attachments/assets/4328eaf7-49fc-47ff-b9bd-e3eb28c4db66)
+
+
 
 # Kesimpulan
 CodeIgniter 4 memudahkan pengembangan aplikasi web dengan arsitektur MVC yang jelas. Framework ini menyediakan struktur yang baik untuk memisahkan logika aplikasi, memudahkan maintenance, dan meningkatkan produktivitas development.
