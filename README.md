@@ -22,15 +22,25 @@ Mengaktifkan Mode Debugging :
 
 # Implementasi MVC
 1. Routing
-
 Menambahkan Route ke app/config/Routes.php :
 $routes->get('/about', 'Page::about');
 $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
    
 2. Controller
-
 Buat file controller menggunakan CLI : php spark make:controller page
 ![image](https://github.com/user-attachments/assets/b6ecb5e9-3ae2-4ee6-9647-9efbb8bb668f)
 
 3. View dengan template
+- Template Header :
+![image](https://github.com/user-attachments/assets/ace9fecb-d699-4fb7-913f-1fa349e79f20)
+  
+- Template Footer :
+![image](https://github.com/user-attachments/assets/5fec80f7-b957-4d92-8d3d-1d7beffbd90f)
+
+- View Pages (contoh about.php)
+![image](https://github.com/user-attachments/assets/15bc7700-9894-4389-b35e-72e4ed20c507)
+
+
+# Kesimpulan
+CodeIgniter 4 memudahkan pengembangan aplikasi web dengan arsitektur MVC yang jelas. Framework ini menyediakan struktur yang baik untuk memisahkan logika aplikasi, memudahkan maintenance, dan meningkatkan produktivitas development.
