@@ -2,11 +2,11 @@
 
 Praktikum ini mempelajari konsep dasar framework PHP CodeIgniter 4 dengan fokus pada arsitektur MVC dan pembuatan aplikasi web sederhana.
 
-**Praktikum 1 : sistem MVC**
+# Praktikum 1 : sistem MVC
 
-# **Langkah Langkah**
+**Langkah Langkah**
 
-# Instalasi CodeIgniter 4
+**Instalasi CodeIgniter 4**
 
 instalasi menggunakan composer :
 
@@ -15,14 +15,14 @@ composer create-project codeigniter4/appstarter . --no-dev
 Untuk memastikan instalasi berhasil, akses http://localhost:8081/lab11_php_ci/public/ dan halaman welcome CodeIgniter 4 akan muncul.
 ![image](https://github.com/user-attachments/assets/d7e1ab9b-9028-4995-b4f5-3b519bddc1d2)
 
-# Konfigurasi Dasar
+**Konfigurasi Dasar**
 
 Mengaktifkan Mode Debugging :
   - Ubah file env menjadi .env
   - Set CI_ENVIRONMENT = development
 ![image](https://github.com/user-attachments/assets/5f37b005-d5c7-4b4f-b4e4-388dbda1d8a3)
 
-# Implementasi MVC
+**Implementasi MVC**
 1. Routing
 
 Menambahkan Route ke app/config/Routes.php :
@@ -48,7 +48,7 @@ hasil dari view about.php :
 
 ![image](https://github.com/user-attachments/assets/4328eaf7-49fc-47ff-b9bd-e3eb28c4db66)
 
-**Praktikum 2 : Sistem CRUD artikel**
+# Praktikum 2 : Sistem CRUD artikel**
 
 # Kesimpulan
 CodeIgniter 4 memudahkan pengembangan aplikasi web dengan arsitektur MVC yang jelas. Framework ini menyediakan struktur yang baik untuk memisahkan logika aplikasi, memudahkan maintenance, dan meningkatkan produktivitas development.
