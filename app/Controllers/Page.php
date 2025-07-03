@@ -7,16 +7,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Page extends BaseController
 {
-    public function artikel()
-    {
-        $data = [
-            'title' => 'Halaman Artikel',
-            'content' => 'ini adalah halaman artikel'
-        ];
-
-        return view('artikel', $data);
-    }
-
     public function about()
     {
         return view('about', [

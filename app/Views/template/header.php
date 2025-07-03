@@ -23,6 +23,7 @@ if (empty($segment)) {
             <a href="<?= base_url('/artikel');?>" class="<?= ($segment == 'artikel') ? 'active' : ''; ?>">Artikel</a>
             <a href="<?= base_url('/about');?>" class="<?= ($segment == 'about') ? 'active' : ''; ?>">About</a>
             <a href="<?= base_url('/contact');?>" class="<?= ($segment == 'contact') ? 'active' : ''; ?>">Kontak</a>
+            <a href="<?= base_url('/admin/artikel');?>" class="<?= ($segment == 'admin') ? 'active' : ''; ?>">Admin Dashboard</a>
         </nav>
         <section id="wrapper">
             <section id="main">
