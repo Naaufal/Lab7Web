@@ -48,7 +48,42 @@ hasil dari view about.php :
 
 ![image](https://github.com/user-attachments/assets/4328eaf7-49fc-47ff-b9bd-e3eb28c4db66)
 
-# Praktikum 2 : Sistem CRUD artikel**
+# Praktikum 2 : Sistem CRUD artikel
+
+**Langkah Langkah Praktikum :**
+
+1. Persiapan Database
+
+Membuat database dan tabel untuk studi kasus data artikel.
+
+Membuat Database
+
+CREATE DATABASE lab_ci4;
+
+Membuat Tabel Artikel
+
+CREATE TABLE artikel (
+    id INT(11) auto_increment,
+    judul VARCHAR(200) NOT NULL,
+    isi TEXT,
+    gambar VARCHAR(200),
+    status TINYINT(1) DEFAULT 0,
+    slug VARCHAR(200),
+    PRIMARY KEY(id)
+);
+   
+3. Konfigurasi Database
+4. Membuat Model
+5. Membuat Controller
+6. Membuat View
+7. Menambahkan Data Sample
+8. Membuat Detail Artikel
+9. Membuat Menu Admin
+10. Membuat Routing
+11. Implementasi CRUD
 
 # Kesimpulan
+
+**Praktikum 1 :**
+
 CodeIgniter 4 memudahkan pengembangan aplikasi web dengan arsitektur MVC yang jelas. Framework ini menyediakan struktur yang baik untuk memisahkan logika aplikasi, memudahkan maintenance, dan meningkatkan produktivitas development.
