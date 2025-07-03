@@ -52,7 +52,7 @@ hasil dari view about.php :
 
 **Langkah Langkah Praktikum :**
 
-1. Persiapan Database
+**1. Persiapan Database**
 
 Membuat database dan tabel untuk studi kasus data artikel.
 
@@ -71,19 +71,101 @@ CREATE TABLE artikel (
     slug VARCHAR(200),
     PRIMARY KEY(id)
 );
+
+![image](https://github.com/user-attachments/assets/52f26397-4306-45cf-95fb-5751f2d5fe64)
+
    
-3. Konfigurasi Database
-4. Membuat Model
-5. Membuat Controller
-6. Membuat View
-7. Menambahkan Data Sample
-8. Membuat Detail Artikel
-9. Membuat Menu Admin
-10. Membuat Routing
-11. Implementasi CRUD
+**2. Konfigurasi Database**
+
+Konfigurasi Koneksi ke database melalui file .env 
+
+![image](https://github.com/user-attachments/assets/021432e8-892f-497e-9e04-c1d8d9a9015d)
+
+   
+**3. Membuat Model**
+
+Membuat file ArtikelModel dengan _php spark make:model ArtikelModel_
+
+![image](https://github.com/user-attachments/assets/56d6b946-bf59-4adc-8dfa-8121afbe306e)
+   
+**4. Membuat Controller**
+
+Membuat file artikel.php dengan _php spark make:controller Artikel_
+
+![image](https://github.com/user-attachments/assets/bc3b3e62-a9a8-47aa-bdaa-2f574c258a12)
+   
+**5. Membuat View**
+
+Membuat file index.php di directory app/views/artikel/ untuk menampilkan daftar artikel
+
+![image](https://github.com/user-attachments/assets/dddeba96-db2c-42de-9f3e-e802a4fec3ab)
+
+   
+**6. Menambahkan Data Sample**
+
+Menambahkan data Sampel ke database untuk testing
+
+INSERT INTO artikel (judul, isi, slug) VALUES
+('Artikel pertama', 'Lorem Ipsum adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf.', 'artikel-pertama'),
+('Artikel kedua', 'Tidak seperti anggapan banyak orang, Lorem Ipsum bukanlah teks-teks yang diacak. Ia berakar dari sebuah naskah sastra latin klasik dari era 45 sebelum masehi, hingga bisa dipastikan usianya telah mencapai lebih dari 2000 tahun.', 'artikel-kedua');
+
+
+**7. Membuat Halaman Detail Artikel**
+
+menambahkan method **view()** di controller artikel.php dan membuat halaman viewnya di directory app/views/artikel/detail.php
+
+![image](https://github.com/user-attachments/assets/ab2cf275-ae11-49ee-aa50-05fc80a70654)
+
+![image](https://github.com/user-attachments/assets/6c325a92-bb43-4df9-a5ce-06006f713bd1)
+
+
+**8. Membuat Menu Admin**
+
+membuat method halaman admin untuk operasi CRUD serta membuat halaman viewsnya di directory app/views/artikel/admin_index.php 
+
+![image](https://github.com/user-attachments/assets/83935b84-a943-44ed-93f4-24d85ee4c64d)
+
+![image](https://github.com/user-attachments/assets/f7cc43df-968c-49df-baf1-69162e9ca6c8)
+
+
+
+
+**9. Membuat Routing**
+
+tambahkan routing di app/config/routes.php
+
+![image](https://github.com/user-attachments/assets/aedf7cd7-a5b2-4d08-ab8c-8ca4bcff4c3c)
+
+
+**10. Implementasi CRUD**
+
+- Menambah Data
+  
+  ![image](https://github.com/user-attachments/assets/3782c969-a636-4aa1-990e-05a615331415)
+
+- Update Data
+  
+  ![image](https://github.com/user-attachments/assets/a48f0c4f-289a-497b-b629-9c1c290d89d4)
+
+- Delete Data
+
+  ![image](https://github.com/user-attachments/assets/c1ebee32-65be-4448-a082-8861891873a0)
+
 
 # Kesimpulan
 
 **Praktikum 1 :**
 
 CodeIgniter 4 memudahkan pengembangan aplikasi web dengan arsitektur MVC yang jelas. Framework ini menyediakan struktur yang baik untuk memisahkan logika aplikasi, memudahkan maintenance, dan meningkatkan produktivitas development.
+
+**Praktikum 2 :**
+
+Praktikum ini berhasil mengimplementasikan sistem CRUD sederhana menggunakan CodeIgniter 4 dengan fitur:
+
+- Manajemen artikel (Create, Read, Update, Delete)
+- Validasi form
+- Routing yang terstruktur
+- Pemisahan logic dengan pattern MVC
+- Interface admin untuk pengelolaan data
+
+Semua fitur berfungsi dengan baik dan sesuai dengan requirements yang diberikan. Kombinasi dari kedua praktikum ini memberikan pemahaman yang komprehensif tentang penggunaan CodeIgniter 4 dari konsep dasar hingga implementasi aplikasi web yang lebih kompleks.
