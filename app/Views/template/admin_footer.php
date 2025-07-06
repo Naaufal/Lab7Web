@@ -1,6 +1,8 @@
-    <footer>
-        <p>&copy; 2021 - Universitas Pelita Bangsa</p>
-    </footer>
-</div>
+</section>
+        </section>
+        <footer>
+            <p>&copy; 2021 - Admin Panel</p>
+        </footer>
+    </div>
 </body>
 </html>

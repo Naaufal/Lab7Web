@@ -2,9 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-
 class Page extends BaseController
 {
     public function about()
@@ -17,16 +14,22 @@ class Page extends BaseController
 
     public function contact()
     {
-        $data = [
+        return view('contact', [
             'title' => 'Halaman Contact',
-            'content' => 'Ini adalah halaman contact'
-        ];
-        
-        return view('contact', $data); 
+            'content' => 'Ini adalah halaman contact untuk menghubungi kami.'
+        ]);
     }
 
     public function faqs()
     {
-        echo "ini halaman faqs";
+        return view('faqs', [
+            'title' => 'Halaman FAQ',
+            'content' => 'Ini adalah halaman FAQ yang berisi pertanyaan yang sering diajukan.'
+        ]);
+    }
+
+    public function tos()
+    {
+        echo "Ini halaman Terms of Services";
     }
 }

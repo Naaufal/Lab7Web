@@ -1,30 +1,22 @@
-<?php
-$uri = service('uri');
-$segment1 = $uri->getSegment(1);
-$segment2 = $uri->getSegment(2);
-$segment3 = $uri->getSegment(3);
-
-if (empty($segment1)) {
-    $segment1 = 'home';
-}
-?>
-
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= $title; ?></title>
-    <link rel="stylesheet" href="<?= base_url('style.css');?>">
+    <title><?= $title ?? 'Admin Panel' ?></title>
+    <link rel="stylesheet" href="<?= base_url('admin.css');?>">
 </head>
 <body>
-    <div class="container">
+    <div id="container">
         <header>
             <h1>Admin Panel</h1>
+            <div class="user-info">
+                Welcome, <?= session()->get('user_name') ?>!
+                <a href="<?= base_url('/user/logout') ?>">Logout</a>
+            </div>
         </header>
         <nav>
-            <a href="<?= base_url('artikel');?>" class="<?= ($segment1 == 'admin' && empty($segment2)) ? 'active' : ''; ?>">Home</a>
-            <a href="<?= base_url('admin/artikel');?>" class="<?= ($segment1 == 'admin' && $segment2 == 'artikel' && empty($segment3)) ? 'active' : ''; ?>">Artikel</a>
-            <a href="<?= base_url('admin/artikel/add');?>" class="<?= ($segment1 == 'admin' && $segment2 == 'artikel' && $segment3 == 'add') ? 'active' : ''; ?>">Tambah Artikel</a>
+            <a href="<?= base_url('/admin/artikel');?>">Artikel</a>
+            <a href="<?= base_url('/admin/artikel/add');?>">Tambah Artikel</a>
         </nav>
-        <section class="container">
-            <section class="main">
+        <section id="wrapper">
+            <section id="main">
