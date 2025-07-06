@@ -128,8 +128,6 @@ membuat method halaman admin untuk operasi CRUD serta membuat halaman viewsnya d
 ![image](https://github.com/user-attachments/assets/f7cc43df-968c-49df-baf1-69162e9ca6c8)
 
 
-
-
 **9. Membuat Routing**
 
 tambahkan routing di app/config/routes.php
@@ -151,6 +149,135 @@ tambahkan routing di app/config/routes.php
 
   ![image](https://github.com/user-attachments/assets/c1ebee32-65be-4448-a082-8861891873a0)
 
+# Praktikum 3 : View Layout dan View Cell
+
+**Langkah Langkah :**
+
+**1. Membuat Layout Utama**
+
+Membuat folder layout di dalam app/Views/ dan membuat file main.php sebagai template utama aplikasi.
+
+
+**2. Modifikasi View Dengan Layout**
+
+Mengubah view yang sudah ada untuk menggunakan layout baru dengan menggunakan _$this->extend()_ dan _$this->section()._
+
+Contoh modifikasi app/Views/home.php:
+
+<?= $this->extend('layout/main') ?>
+
+<?= $this->section('content') ?>
+
+<h1><?= $title; ?></h1>
+
+<hr>
+
+<p><?= $content; ?></p>
+
+<?= $this->endSection() ?>
+
+![image](https://github.com/user-attachments/assets/e028d5a8-6979-4170-8747-c8f51fa09f43)
+
+**3. Membuat View Cell**
+
+Membuat folder Cells di dalam app/ dan membuat file ArtikelTerkini.php menggunakan _php spark make:cell ArtikelTerkini_ untuk menampilkan artikel terkini secara dinamis.
+
+![image](https://github.com/user-attachments/assets/ab8a3f27-51f0-493e-b6d8-128c3b46dbd6)
+
+
+**4. Membuat View Component**
+
+Membuat folder components di dalam app/Views/components dan membuat file artikel_terkini.php untuk template artikel terkini.
+
+![image](https://github.com/user-attachments/assets/83fbd0a7-7464-462a-bf5a-2358dbbc55b0)
+
+Setelah implementasi View Layout dan View Cell, tampilan website menjadi lebih terstruktur dan modular:
+
+- Layout utama yang konsisten di semua halaman
+- Sidebar yang menampilkan artikel terkini secara dinamis
+- Kode yang lebih mudah di-maintain dan reusable
+
+# Praktikum 4
+
+**Langkah Langkah :**
+
+**1. Persiapan Database**
+Membuat tabel user untuk sistem login.
+
+_CREATE TABLE user (
+    id INT(11) auto_increment,
+    username VARCHAR(200) NOT NULL,
+    useremail VARCHAR(200),
+    userpassword VARCHAR(200),
+    PRIMARY KEY(id)
+);_
+
+![image](https://github.com/user-attachments/assets/29c41bfd-9ddf-45b2-a4c1-31b2eb1f414e)
+
+
+**2. Membuat Model User**
+
+Membuat file UserModel.php di app/Models/ menggunakan _php spark make:model userModel_ untuk mengelola data user.
+
+![image](https://github.com/user-attachments/assets/fea0387a-081a-44cb-8e9d-3804eeb6db4c)
+
+**3. Membuat Controller User**
+
+Membuat file User.php di app/Controllers/ menggunakan _php spark make:controller user_ dengan method untuk login dan logout.
+
+![image](https://github.com/user-attachments/assets/8c0e5513-5936-464e-b57b-40812710519f)
+
+**4. Membuat View Login**
+
+Membuat direktori user di app/views/ dan membuat file login.php untuk form login.
+
+![image](https://github.com/user-attachments/assets/85d51ebe-9149-4bba-90ff-b7ac03b0a067)
+
+**5. Membuat Database Seeder**
+
+Membuat seeder untuk data dummy user menggunakan CLI. _php spark make:seeder userSeeder_
+
+kemudian isi file UserSeeder.php :
+
+![image](https://github.com/user-attachments/assets/e34c9ffa-67cf-4d22-843f-b82368481512)
+
+untuk menjalankan seeder menggunakan command cli : _php spark db:seed UserSeeder_
+
+![image](https://github.com/user-attachments/assets/0c409ded-e900-464e-ab0a-a0c60fdce09b)
+
+**6. Membuat Middleware Auth**
+
+Membuat filter menggunakan _php spark make:filter Auth_ untuk proteksi halaman admin di app/Filters/Auth.php.
+
+![image](https://github.com/user-attachments/assets/350a7fef-645e-4f96-a59e-b15d4b1ffb74)
+
+**7. Konfigurasi Filter**
+
+tambahkan filter auth yang tadi dengan menambahkan baris **'auth' => App\Filters\Auth::class** ke dalam file App/config/filters.php di bagian aliases
+
+![image](https://github.com/user-attachments/assets/2c6177bb-4bb4-400d-92f0-e6856ee91d48)
+
+**8. Konfigurasi Routes**
+
+Mengupdate routes agar halaman login bisa di akses dan  menggunakan filter auth pada halaman admin :
+
+![image](https://github.com/user-attachments/assets/4b01a27e-04b6-4f4b-9f56-0b467a5fe0ec)
+
+**9. Test sistem login**
+
+Mengakses halaman admin tanpa login akan redirect ke halaman login:
+
+- URL: http://localhost:8080/admin/artikel
+- Akan redirect ke: http://localhost:8080/user/login
+
+**10. Login Dengan Kredensial**
+
+Login menggunakan:
+
+Email: admin@email.com
+Password: admin123
+
+Setelah login berhasil, akan redirect ke halaman admin artikel.
 
 # Kesimpulan
 
@@ -168,4 +295,23 @@ Praktikum ini berhasil mengimplementasikan sistem CRUD sederhana menggunakan Cod
 - Pemisahan logic dengan pattern MVC
 - Interface admin untuk pengelolaan data
 
-Semua fitur berfungsi dengan baik dan sesuai dengan requirements yang diberikan. Kombinasi dari kedua praktikum ini memberikan pemahaman yang komprehensif tentang penggunaan CodeIgniter 4 dari konsep dasar hingga implementasi aplikasi web yang lebih kompleks.
+**Praktikum 3 :**
+
+Praktikum View Layout dan View Cell memberikan pemahaman tentang:
+
+- Penggunaan layout template yang konsisten
+- Implementasi View Cell untuk komponen yang dapat digunakan ulang
+- Struktur kode yang lebih modular dan maintainable
+- Pemisahan concern antara layout, content, dan komponen
+
+**Praktikum 4 :**
+
+Praktikum sistem login berhasil mengimplementasikan:
+
+- Sistem autentikasi user dengan password hashing
+- Session management untuk maintain login state
+- Filter untuk proteksi halaman admin
+- Redirect system untuk unauthorized access
+- Database seeder untuk data dummy user
+
+Semua fitur berfungsi dengan baik dan sesuai dengan requirements yang diberikan. Kombinasi dari keempat praktikum ini memberikan pemahaman yang komprehensif tentang penggunaan CodeIgniter 4 dari konsep dasar hingga implementasi aplikasi web yang lebih kompleks dengan sistem keamanan.
