@@ -261,7 +261,18 @@ tambahkan filter auth yang tadi dengan menambahkan baris **'auth' => App\Filters
 
 Mengupdate routes agar halaman login bisa di akses dan  menggunakan filter auth pada halaman admin :
 
-![image](https://github.com/user-attachments/assets/4b01a27e-04b6-4f4b-9f56-0b467a5fe0ec)
+```
+$routes->get('/user/login', 'User::login');
+$routes->post('/user/login', 'User::login');
+$routes->get('/user/logout', 'User::logout');
+
+$routes->group('admin', ['filter' => 'auth'], function($routes) {
+    $routes->get('artikel', 'Artikel::admin_index');
+    $routes->add('artikel/add', 'Artikel::add');
+    $routes->add('artikel/edit/(:any)', 'Artikel::edit/$1');
+    $routes->get('artikel/delete/(:any)', 'Artikel::delete/$1');
+});
+```
 
 **9. Test sistem login**
 
