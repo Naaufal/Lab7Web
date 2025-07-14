@@ -95,6 +95,14 @@ nav a.active {
     text-decoration: underline;
 }
 
+.artikel-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    margin: 10px 0;
+}
+
 /* Footer */
 footer {
     background: #1f5faa;

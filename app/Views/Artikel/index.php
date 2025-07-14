@@ -8,9 +8,11 @@
 <article class="entry">
     <h2><a href="<?= base_url('/artikel/' . $row['slug']);?>"><?= $row['judul']; ?></a></h2>
     <?php if($row['gambar']): ?>
-        <img src="<?= base_url('/gambar/' . $row['gambar']);?>" alt="<?= $row['judul']; ?>">
+        <img src="<?= base_url('/gambar/' . $row['gambar']);?>" 
+             alt="<?= $row['judul']; ?>" 
+             class="artikel-image">
     <?php endif; ?>
-    <p><?= substr($row['isi'], 0, 200); ?></p>
+    <p><?= substr($row['isi'], 0, 200); ?>...</p>
 </article>
 <hr class="divider" />
 <?php endforeach; else: ?>
