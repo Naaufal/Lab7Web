@@ -21,7 +21,7 @@ Mengaktifkan Mode Debugging :
   - Ubah file env menjadi .env
   - Set CI_ENVIRONMENT = development
 
-```
+```php
 CI_ENVIRONMENT = development
 ```
 
@@ -29,7 +29,7 @@ CI_ENVIRONMENT = development
 1. Routing
 
 Menambahkan Route ke app/config/Routes.php :
-```
+```php
 $routes->get('/about', 'Page::about');
 $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
@@ -37,7 +37,7 @@ $routes->get('/faqs', 'Page::faqs');
 
 3. Controller
 Buat file controller menggunakan CLI : php spark make:controller page
-```
+```php
 <?php
 
 namespace App\Controllers;
@@ -77,43 +77,74 @@ class Page extends BaseController
 
 4. View dengan template
   - Template Header :
-```
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><?= $title; ?></title>
-    <link rel="stylesheet" href="<?= base_url('/style.css'); ?>">
-</head>
-<body>
-    <div id="container">
-        <header>
-            <h1>Layout Sederhana</h1>
-        </header>
-        <nav>
-            <a href="<?= base_url('/'); ?>"
-               class="<?= uri_string() == '' ? 'active' : ''; ?>">Home</a>
-
-            <a href="<?= base_url('/artikel'); ?>"
-               class="<?= str_starts_with(uri_string(), 'artikel') ? 'active' : ''; ?>">Artikel</a>
-
-            <a href="<?= base_url('/about'); ?>"
-               class="<?= str_starts_with(uri_string(), 'about') ? 'active' : ''; ?>">About</a>
-
-            <a href="<?= base_url('/contact'); ?>"
-               class="<?= str_starts_with(uri_string(), 'contact') ? 'active' : ''; ?>">Contact</a>
-        </nav>
-
-        <section id="wrapper">
-            <section id="main">
-
-```
+    ```php
+        <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title><?= $title; ?></title>
+        <link rel="stylesheet" href="<?= base_url('/style.css'); ?>">
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <h1>Layout Sederhana</h1>
+            </header>
+            <nav>
+                <a href="<?= base_url('/'); ?>"
+                   class="<?= uri_string() == '' ? 'active' : ''; ?>">Home</a>
+    
+                <a href="<?= base_url('/artikel'); ?>"
+                   class="<?= str_starts_with(uri_string(), 'artikel') ? 'active' : ''; ?>">Artikel</a>
+    
+                <a href="<?= base_url('/about'); ?>"
+                   class="<?= str_starts_with(uri_string(), 'about') ? 'active' : ''; ?>">About</a>
+    
+                <a href="<?= base_url('/contact'); ?>"
+                   class="<?= str_starts_with(uri_string(), 'contact') ? 'active' : ''; ?>">Contact</a>
+            </nav>
+    
+            <section id="wrapper">
+                <section id="main">
+  
+    ```  
+  
   
   - Template Footer :
-  ![image](https://github.com/user-attachments/assets/5fec80f7-b957-4d92-8d3d-1d7beffbd90f)
+    ```php
+                    </section>
+                <aside id="sidebar">
+                    <div class="widget-box">
+                        <h3 class="title">Widget Header</h3>
+                        <ul>
+                            <li><a href="#">Widget Link</a></li>
+                            <li><a href="#">Widget Link</a></li>
+                        </ul>
+                    </div>
+                    <div class="widget-box">
+                        <h3 class="title">Widget Text</h3>
+                        <p>Vestibulum lorem elit, iaculis in nisl volutpat, malesuada tincidunt arcu. Proin in leo fringilla, vestibulum mi porta, faucibus felis. Integer pharetra est nunc, nec pretium nunc pretium ac.</p>
+                    </div>
+                </aside>
+            </section>
+            <footer>
+                <p>&copy; 2021 - Universitas Pelita Bangsa</p>
+            </footer>
+        </div>
+    </body>
+    </html>
+    ```
 
   - View Pages (contoh about.php)
-  ![image](https://github.com/user-attachments/assets/15bc7700-9894-4389-b35e-72e4ed20c507)
+    ```php
+    <?= $this->extend('layout/main') ?>
+    
+    <?= $this->section('content') ?>
+    <h1><?= $title; ?></h1>
+    <hr>
+    <p><?= $content; ?></p>
+    <?= $this->endSection() ?>
+    ```
 
 hasil dari view about.php :
 
