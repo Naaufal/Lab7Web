@@ -2,7 +2,7 @@
 
 Praktikum ini mempelajari konsep dasar framework PHP CodeIgniter 4 dengan fokus pada arsitektur MVC dan pembuatan aplikasi web sederhana.
 
-# Praktikum 1 : sistem MVC
+## Praktikum 1 : sistem MVC
 
 **Langkah Langkah**
 
@@ -149,7 +149,7 @@ hasil dari view about.php :
 
 ![image](https://github.com/user-attachments/assets/4328eaf7-49fc-47ff-b9bd-e3eb28c4db66)
 
-# Praktikum 2 : Sistem CRUD artikel
+## Praktikum 2 : Sistem CRUD artikel
 
 **Langkah Langkah Praktikum :**
 
@@ -419,7 +419,7 @@ $routes->group('admin', function($routes) {
   }
   ```
 
-# Praktikum 3 : View Layout dan View Cell
+## Praktikum 3 : View Layout dan View Cell
 
 **Langkah Langkah :**
 
@@ -496,20 +496,22 @@ Setelah implementasi View Layout dan View Cell, tampilan website menjadi lebih t
 - Sidebar yang menampilkan artikel terkini secara dinamis
 - Kode yang lebih mudah di-maintain dan reusable
 
-# Praktikum 4
+## Praktikum 4
 
 **Langkah Langkah :**
 
 **1. Persiapan Database**
 Membuat tabel user untuk sistem login.
 
-_CREATE TABLE user (
+```sql
+CREATE TABLE user (
     id INT(11) auto_increment,
     username VARCHAR(200) NOT NULL,
     useremail VARCHAR(200),
     userpassword VARCHAR(200),
     PRIMARY KEY(id)
-);_
+);
+```
 
 ![image](https://github.com/user-attachments/assets/29c41bfd-9ddf-45b2-a4c1-31b2eb1f414e)
 
@@ -738,7 +740,7 @@ Password: admin123
 
 Setelah login berhasil, akan redirect ke halaman admin artikel.
 
-# Praktikum 5
+## Praktikum 5
 
 **Langkah Langkah :**
 
