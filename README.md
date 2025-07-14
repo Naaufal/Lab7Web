@@ -10,7 +10,9 @@ Praktikum ini mempelajari konsep dasar framework PHP CodeIgniter 4 dengan fokus 
 
 instalasi menggunakan composer :
 
-```composer create-project codeigniter4/appstarter . --no-dev```
+```bash
+composer create-project codeigniter4/appstarter . --no-dev
+```
 
 Untuk memastikan instalasi berhasil, akses http://localhost:8081/lab11_php_ci/public/ dan halaman welcome CodeIgniter 4 akan muncul.
 ![image](https://github.com/user-attachments/assets/d7e1ab9b-9028-4995-b4f5-3b519bddc1d2)
