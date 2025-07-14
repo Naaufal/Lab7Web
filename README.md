@@ -279,6 +279,80 @@ Password: admin123
 
 Setelah login berhasil, akan redirect ke halaman admin artikel.
 
+# Praktikum 5
+
+**Langkah Langkah :**
+
+**1. Membuat Pagination**
+
+Pagination merupakan proses yang digunakan untuk membatasi tampilan data yang panjang dengan memecah tampilan menjadi beberapa halaman.
+
+Modifikasi Controller Artikel pada method admin_index():
+
+```php
+public function admin_index()
+{
+    $title = 'Daftar Artikel';
+    $model = new ArtikelModel();
+    $data = [
+        'title' => $title,
+        'artikel' => $model->paginate(10), // data dibatasi 10 record per halaman
+        'pager' => $model->pager,
+    ];
+    return view('artikel/admin_index', $data);
+}
+```
+
+Tambahkan kode pagination di file views/artikel/admin_index.php:
+
+```php
+<?= $pager->links(); ?>
+```
+
+**2. Membuat Pencarian**
+
+Pencarian data digunakan untuk memfilter data berdasarkan kata kunci tertentu.
+
+Modifikasi method admin_index() untuk mendukung pencarian:
+
+```php
+public function admin_index()
+{
+    $title = 'Daftar Artikel';
+    $q = $this->request->getVar('q') ?? '';
+    $model = new ArtikelModel();
+    $data = [
+        'title' => $title,
+        'q' => $q,
+        'artikel' => $model->like('judul', $q)->paginate(10), // data dibatasi 10 record per halaman
+        'pager' => $model->pager,
+    ];
+    return view('artikel/admin_index', $data);
+}
+```
+
+Tambahkan form pencarian di file views/artikel/admin_index.php:
+
+```php
+<form method="get" class="form-search">
+    <input type="text" name="q" value="<?= $q; ?>" placeholder="Cari data">
+    <input type="submit" value="Cari" class="btn btn-primary">
+</form>
+```
+
+Update link pager untuk mempertahankan parameter pencarian:
+
+```php
+<?= $pager->only(['q'])->links(); ?>
+```
+
+**3. Testing Fitur**
+
+- Pagination: Menampilkan maksimal 10 artikel per halaman dengan navigasi halaman
+- Pencarian: Filter artikel berdasarkan judul dengan kata kunci tertentu
+- Kombinasi: Pencarian dengan pagination yang tetap mempertahankan kata kunci
+
+
 # Kesimpulan
 
 **Praktikum 1 :**
@@ -314,4 +388,13 @@ Praktikum sistem login berhasil mengimplementasikan:
 - Redirect system untuk unauthorized access
 - Database seeder untuk data dummy user
 
-Semua fitur berfungsi dengan baik dan sesuai dengan requirements yang diberikan. Kombinasi dari keempat praktikum ini memberikan pemahaman yang komprehensif tentang penggunaan CodeIgniter 4 dari konsep dasar hingga implementasi aplikasi web yang lebih kompleks dengan sistem keamanan.
+**Praktikum 5 :**
+
+Praktikum pagination dan pencarian berhasil mengimplementasikan:
+
+- Sistem pagination untuk membatasi tampilan data per halaman
+- Fitur pencarian dengan filter berdasarkan judul artikel
+- Integrasi pagination dengan pencarian yang seamless
+- Penggunaan library pagination CodeIgniter 4 yang mudah digunakan
+
+Semua fitur berfungsi dengan baik dan sesuai dengan requirements yang diberikan. Kombinasi dari kelima praktikum ini memberikan pemahaman yang komprehensif tentang penggunaan CodeIgniter 4 dari konsep dasar hingga implementasi aplikasi web yang lebih kompleks dengan sistem keamanan, pagination, dan pencarian.
