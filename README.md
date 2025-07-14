@@ -823,6 +823,93 @@ Update link pager untuk mempertahankan parameter pencarian:
 - Kombinasi: Pencarian dengan pagination yang tetap mempertahankan kata kunci
 
 
+## Praktikum 6: Upload File Gambar
+
+**Langkah Langkah :**
+
+**1. Tujuan Praktikum**
+- Memahami konsep dasar File Upload
+- Membuat File Upload menggunakan Framework CodeIgniter 4
+
+**2. Modifikasi Controller Artikel**
+
+Mengubah method `add()` di Controller Artikel untuk menambahkan fungsi upload gambar:
+
+```php
+public function add()
+{
+    // validasi data.
+    $validation = \Config\Services::validation();
+    $validation->setRules(['judul' => 'required']);
+    $isDataValid = $validation->withRequest($this->request)->run();
+    
+    if ($isDataValid)
+    {
+        $file = $this->request->getFile('gambar');
+        $file->move(ROOTPATH . 'public/gambar');
+        
+        $artikel = new ArtikelModel();
+        $artikel->insert([
+            'judul' => $this->request->getPost('judul'),
+            'isi' => $this->request->getPost('isi'),
+            'slug' => url_title($this->request->getPost('judul')),
+            'gambar' => $file->getName(),
+        ]);
+        
+        return redirect('admin/artikel');
+    }
+    
+    $title = "Tambah Artikel";
+    return view('artikel/form_add', compact('title'));
+}
+```
+
+**3. Modifikasi View Form**
+
+Menambahkan field input file di `views/artikel/form_add.php`:
+
+```php
+<p>
+    <input type="file" name="gambar">
+</p>
+```
+
+**4. Update Form Tag**
+
+Menambahkan `enctype="multipart/form-data"` pada tag form:
+
+```php
+<form action="" method="post" enctype="multipart/form-data">
+```
+
+<img width="1018" height="734" alt="image" src="https://github.com/user-attachments/assets/eadd7135-f2c1-4607-8adf-e1aa04d24625" />
+
+
+**5. Membuat Folder Upload**
+
+Membuat folder `gambar` di dalam direktori `public/` untuk menyimpan file upload.
+
+**6. Testing Upload**
+
+Mengakses menu tambah artikel dan mencoba upload file gambar. Sistem akan:
+- Memvalidasi form
+- Mengupload file gambar ke folder `public/gambar`
+- Menyimpan nama file ke database
+- Redirect ke halaman admin artikel
+
+**7. Tampilan Gambar**
+
+Gambar yang diupload akan ditampilkan di halaman detail artikel dan daftar artikel dengan menggunakan:
+
+```php
+<?php if($artikel['gambar']): ?>
+    <img src="<?= base_url('/gambar/' . $artikel['gambar']);?>" alt="<?= $artikel['judul']; ?>">
+<?php endif; ?>
+```
+
+<img width="760" height="442" alt="image" src="https://github.com/user-attachments/assets/3d872615-ec51-47e9-8dcc-b9ee244436de" />
+
+
 # Kesimpulan
 
 **Praktikum 1 :**
@@ -867,4 +954,14 @@ Praktikum pagination dan pencarian berhasil mengimplementasikan:
 - Integrasi pagination dengan pencarian yang seamless
 - Penggunaan library pagination CodeIgniter 4 yang mudah digunakan
 
-Semua fitur berfungsi dengan baik dan sesuai dengan requirements yang diberikan. Kombinasi dari kelima praktikum ini memberikan pemahaman yang komprehensif tentang penggunaan CodeIgniter 4 dari konsep dasar hingga implementasi aplikasi web yang lebih kompleks dengan sistem keamanan, pagination, dan pencarian.
+**Praktikum 6 :**
+
+Praktikum upload file gambar berhasil mengimplementasikan:
+
+- Sistem upload file gambar menggunakan CodeIgniter 4
+- Validasi dan handling file upload
+- Penyimpanan file ke direktori public
+- Integrasi upload file dengan sistem CRUD artikel
+- Tampilan gambar pada halaman artikel
+
+Semua fitur berfungsi dengan baik dan sesuai dengan requirements yang diberikan. Kombinasi dari keenam praktikum ini memberikan pemahaman yang komprehensif tentang penggunaan CodeIgniter 4 dari konsep dasar hingga implementasi aplikasi web yang lebih kompleks dengan sistem keamanan, pagination, pencarian, dan upload file.
