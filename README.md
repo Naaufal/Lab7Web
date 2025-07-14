@@ -772,6 +772,9 @@ Tambahkan kode pagination di file views/artikel/admin_index.php:
 <?= $pager->links(); ?>
 ```
 
+<img width="1018" height="466" alt="image" src="https://github.com/user-attachments/assets/25acbeca-61cd-41e4-bf8d-658c715d779e" />
+
+
 **2. Membuat Pencarian**
 
 Pencarian data digunakan untuk memfilter data berdasarkan kata kunci tertentu.
@@ -808,6 +811,10 @@ Update link pager untuk mempertahankan parameter pencarian:
 ```php
 <?= $pager->only(['q'])->links(); ?>
 ```
+
+<img width="1018" height="621" alt="image" src="https://github.com/user-attachments/assets/bcec1ac8-b021-4105-89cd-752a6fa25947" />
+
+
 
 **3. Testing Fitur**
 
