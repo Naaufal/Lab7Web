@@ -20,16 +20,21 @@ Untuk memastikan instalasi berhasil, akses http://localhost:8081/lab11_php_ci/pu
 Mengaktifkan Mode Debugging :
   - Ubah file env menjadi .env
   - Set CI_ENVIRONMENT = development
-![image](https://github.com/user-attachments/assets/5f37b005-d5c7-4b4f-b4e4-388dbda1d8a3)
+
+```
+CI_ENVIRONMENT = development
+```
 
 **Implementasi MVC**
 1. Routing
 
 Menambahkan Route ke app/config/Routes.php :
+```
 $routes->get('/about', 'Page::about');
 $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
-   
+```
+
 3. Controller
 Buat file controller menggunakan CLI : php spark make:controller page
 ![image](https://github.com/user-attachments/assets/b6ecb5e9-3ae2-4ee6-9647-9efbb8bb668f)
