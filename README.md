@@ -37,11 +37,77 @@ $routes->get('/faqs', 'Page::faqs');
 
 3. Controller
 Buat file controller menggunakan CLI : php spark make:controller page
-![image](https://github.com/user-attachments/assets/b6ecb5e9-3ae2-4ee6-9647-9efbb8bb668f)
+```
+<?php
+
+namespace App\Controllers;
+
+class Page extends BaseController
+{
+    public function about()
+    {
+        return view('about', [
+            'title' => 'Halaman About',
+            'content' => 'Ini adalah halaman about yang menjelaskan tentang isi halaman ini.'
+        ]);
+    }
+
+    public function contact()
+    {
+        return view('contact', [
+            'title' => 'Halaman Contact',
+            'content' => 'Ini adalah halaman contact untuk menghubungi kami.'
+        ]);
+    }
+
+    public function faqs()
+    {
+        return view('faqs', [
+            'title' => 'Halaman FAQ',
+            'content' => 'Ini adalah halaman FAQ yang berisi pertanyaan yang sering diajukan.'
+        ]);
+    }
+
+    public function tos()
+    {
+        echo "Ini halaman Terms of Services";
+    }
+}
+```
 
 4. View dengan template
   - Template Header :
-  ![image](https://github.com/user-attachments/assets/ace9fecb-d699-4fb7-913f-1fa349e79f20)
+```
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $title; ?></title>
+    <link rel="stylesheet" href="<?= base_url('/style.css'); ?>">
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1>Layout Sederhana</h1>
+        </header>
+        <nav>
+            <a href="<?= base_url('/'); ?>"
+               class="<?= uri_string() == '' ? 'active' : ''; ?>">Home</a>
+
+            <a href="<?= base_url('/artikel'); ?>"
+               class="<?= str_starts_with(uri_string(), 'artikel') ? 'active' : ''; ?>">Artikel</a>
+
+            <a href="<?= base_url('/about'); ?>"
+               class="<?= str_starts_with(uri_string(), 'about') ? 'active' : ''; ?>">About</a>
+
+            <a href="<?= base_url('/contact'); ?>"
+               class="<?= str_starts_with(uri_string(), 'contact') ? 'active' : ''; ?>">Contact</a>
+        </nav>
+
+        <section id="wrapper">
+            <section id="main">
+
+```
   
   - Template Footer :
   ![image](https://github.com/user-attachments/assets/5fec80f7-b957-4d92-8d3d-1d7beffbd90f)
