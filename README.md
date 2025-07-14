@@ -10,7 +10,7 @@ Praktikum ini mempelajari konsep dasar framework PHP CodeIgniter 4 dengan fokus 
 
 instalasi menggunakan composer :
 
-composer create-project codeigniter4/appstarter . --no-dev
+```composer create-project codeigniter4/appstarter . --no-dev```
 
 Untuk memastikan instalasi berhasil, akses http://localhost:8081/lab11_php_ci/public/ dan halaman welcome CodeIgniter 4 akan muncul.
 ![image](https://github.com/user-attachments/assets/d7e1ab9b-9028-4995-b4f5-3b519bddc1d2)
@@ -35,7 +35,7 @@ CI_ENVIRONMENT = development
   ```
 
 3. Controller
-Buat file controller menggunakan CLI : php spark make:controller page
+Buat file controller menggunakan CLI : ```php spark make:controller page```
 ```php
 <?php
 
@@ -76,7 +76,7 @@ class Page extends BaseController
 
 4. View dengan template
   - Template Header :
-    ```php
+    ```html
         <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -110,7 +110,7 @@ class Page extends BaseController
   
   
   - Template Footer :
-    ```php
+    ```html
                     </section>
                 <aside id="sidebar">
                     <div class="widget-box">
@@ -159,10 +159,13 @@ Membuat database dan tabel untuk studi kasus data artikel.
 
 Membuat Database
 
+```sql
 CREATE DATABASE lab_ci4;
+```
 
 Membuat Tabel Artikel
 
+```sql
 CREATE TABLE artikel (
     id INT(11) auto_increment,
     judul VARCHAR(200) NOT NULL,
@@ -172,7 +175,7 @@ CREATE TABLE artikel (
     slug VARCHAR(200),
     PRIMARY KEY(id)
 );
-
+```
 ![image](https://github.com/user-attachments/assets/52f26397-4306-45cf-95fb-5751f2d5fe64)
 
    
@@ -180,42 +183,118 @@ CREATE TABLE artikel (
 
 Konfigurasi Koneksi ke database melalui file .env 
 
-![image](https://github.com/user-attachments/assets/021432e8-892f-497e-9e04-c1d8d9a9015d)
+```env
+database.default.hostname = localhost
+database.default.database = lab_ci4
+database.default.username = root
+database.default.password = 
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
+```
 
    
 **3. Membuat Model**
 
-Membuat file ArtikelModel dengan _php spark make:model ArtikelModel_
+Membuat file ArtikelModel dengan ```php spark make:model ArtikelModel```
 
-![image](https://github.com/user-attachments/assets/56d6b946-bf59-4adc-8dfa-8121afbe306e)
+```php
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class ArtikelModel extends Model
+{
+    protected $table = 'artikel';
+    protected $primaryKey = 'id';
+    protected $useAutoIncrement = true;
+    protected $allowedFields = ['judul', 'isi', 'status', 'slug', 'gambar'];
+    protected $useTimestamps = true;
+}
+```
    
 **4. Membuat Controller**
 
-Membuat file artikel.php dengan _php spark make:controller Artikel_
+Membuat file artikel.php dengan ```php spark make:controller Artikel```
 
-![image](https://github.com/user-attachments/assets/bc3b3e62-a9a8-47aa-bdaa-2f574c258a12)
+```php
+<?php
+
+namespace App\Controllers;
+
+use App\Models\ArtikelModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class Artikel extends BaseController
+{
+    public function index()
+    {
+        $title = 'Daftar Artikel';
+        $model = new ArtikelModel();
+        $artikel = $model->findAll();
+        return view('artikel/index', compact('artikel', 'title'));
+    }
+}
+```
    
 **5. Membuat View**
 
 Membuat file index.php di directory app/views/artikel/ untuk menampilkan daftar artikel
 
-![image](https://github.com/user-attachments/assets/dddeba96-db2c-42de-9f3e-e802a4fec3ab)
+```php
+<?= $this->extend('layout/main') ?>
+
+<?= $this->section('content') ?>
+<h1><?= $title; ?></h1>
+<hr>
+
+<?php if($artikel): foreach($artikel as $row): ?>
+<article class="entry">
+    <h2><a href="<?= base_url('/artikel/' . $row['slug']);?>"><?= $row['judul']; ?></a></h2>
+    <?php if($row['gambar']): ?>
+        <img src="<?= base_url('/gambar/' . $row['gambar']);?>" alt="<?= $row['judul']; ?>">
+    <?php endif; ?>
+    <p><?= substr($row['isi'], 0, 200); ?></p>
+</article>
+<hr class="divider" />
+<?php endforeach; else: ?>
+<article class="entry">
+    <h2>Belum ada data.</h2>
+</article>
+<?php endif; ?>
+<?= $this->endSection() ?>
+```
 
    
 **6. Menambahkan Data Sample**
 
 Menambahkan data Sampel ke database untuk testing
 
+```sql
 INSERT INTO artikel (judul, isi, slug) VALUES
 ('Artikel pertama', 'Lorem Ipsum adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf.', 'artikel-pertama'),
 ('Artikel kedua', 'Tidak seperti anggapan banyak orang, Lorem Ipsum bukanlah teks-teks yang diacak. Ia berakar dari sebuah naskah sastra latin klasik dari era 45 sebelum masehi, hingga bisa dipastikan usianya telah mencapai lebih dari 2000 tahun.', 'artikel-kedua');
-
+```
 
 **7. Membuat Halaman Detail Artikel**
 
 menambahkan method **view()** di controller artikel.php dan membuat halaman viewnya di directory app/views/artikel/detail.php
 
-![image](https://github.com/user-attachments/assets/ab2cf275-ae11-49ee-aa50-05fc80a70654)
+```php
+<?= $this->include('template/header'); ?>
+
+<article class="entry">
+    <h2><?= $artikel['judul']; ?></h2>
+    <?php if($artikel['gambar']): ?>
+        <img src="<?= base_url('/gambar/' . $artikel['gambar']);?>" alt="<?= $artikel['judul']; ?>">
+    <?php endif; ?>
+    <p><?= $artikel['isi']; ?></p>
+</article>
+
+<?= $this->include('template/footer'); ?>
+```
 
 ![image](https://github.com/user-attachments/assets/6c325a92-bb43-4df9-a5ce-06006f713bd1)
 
@@ -224,7 +303,43 @@ menambahkan method **view()** di controller artikel.php dan membuat halaman view
 
 membuat method halaman admin untuk operasi CRUD serta membuat halaman viewsnya di directory app/views/artikel/admin_index.php 
 
-![image](https://github.com/user-attachments/assets/83935b84-a943-44ed-93f4-24d85ee4c64d)
+```php
+<?= $this->include('template/admin_header'); ?>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Judul</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if($artikel): foreach($artikel as $row): ?>
+        <tr>
+            <td><?= $row['id']; ?></td>
+            <td>
+                <b><?= $row['judul']; ?></b>
+                <p><small><?= substr($row['isi'], 0, 50); ?></small></p>
+            </td>
+            <td><?= $row['status']; ?></td>
+            <td>
+                <a class="btn" href="<?= base_url('/admin/artikel/edit/' . $row['id']);?>">Ubah</a>
+                <a class="btn btn-danger" onclick="return confirm('Yakin menghapus data?');" href="<?= base_url('/admin/artikel/delete/' . $row['id']);?>">Hapus</a>
+            </td>
+        </tr>
+        <?php endforeach; else: ?>
+        <tr>
+            <td colspan="4">Belum ada data.</td>
+        </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+
+<?= $this->include('template/admin_footer'); ?>
+```
 
 ![image](https://github.com/user-attachments/assets/f7cc43df-968c-49df-baf1-69162e9ca6c8)
 
@@ -233,22 +348,76 @@ membuat method halaman admin untuk operasi CRUD serta membuat halaman viewsnya d
 
 tambahkan routing di app/config/routes.php
 
-![image](https://github.com/user-attachments/assets/aedf7cd7-a5b2-4d08-ab8c-8ca4bcff4c3c)
+```php
+$routes->group('admin', function($routes) {
+    $routes->get('artikel', 'Artikel::admin_index');
+    $routes->add('artikel/add', 'Artikel::add');
+    $routes->add('artikel/edit/(:any)', 'Artikel::edit/$1');
+    $routes->get('artikel/delete/(:any)', 'Artikel::delete/$1');
+});
+```
 
 
 **10. Implementasi CRUD**
 
 - Menambah Data
   
-  ![image](https://github.com/user-attachments/assets/3782c969-a636-4aa1-990e-05a615331415)
+  ```php
+  public function add()
+  {
+      $validation = \Config\Services::validation();
+      $validation->setRules(['judul' => 'required']);
+      $isDataValid = $validation->withRequest($this->request)->run();
+      
+      if ($isDataValid) {
+          $artikel = new ArtikelModel();
+          $artikel->insert([
+              'judul' => $this->request->getPost('judul'),
+              'isi' => $this->request->getPost('isi'),
+              'slug' => url_title($this->request->getPost('judul')),
+          ]);
+          return redirect('admin/artikel');
+      }
+      
+      $title = "Tambah Artikel";
+      return view('artikel/form_add', compact('title'));
+  }
+  ```
 
 - Update Data
   
-  ![image](https://github.com/user-attachments/assets/a48f0c4f-289a-497b-b629-9c1c290d89d4)
+  ```php
+  public function edit($id)
+  {
+      $artikel = new ArtikelModel();
+      $validation = \Config\Services::validation();
+      $validation->setRules(['judul' => 'required']);
+      $isDataValid = $validation->withRequest($this->request)->run();
+      
+      if ($isDataValid) {
+          $artikel->update($id, [
+              'judul' => $this->request->getPost('judul'),
+              'isi' => $this->request->getPost('isi'),
+          ]);
+          return redirect('admin/artikel');
+      }
+      
+      $data = $artikel->where('id', $id)->first();
+      $title = "Edit Artikel";
+      return view('artikel/form_edit', compact('title', 'data'));
+  }
+  ```
 
 - Delete Data
 
-  ![image](https://github.com/user-attachments/assets/c1ebee32-65be-4448-a082-8861891873a0)
+  ```php
+  public function delete($id)
+  {
+      $artikel = new ArtikelModel();
+      $artikel->delete($id);
+      return redirect('admin/artikel');
+  }
+  ```
 
 # Praktikum 3 : View Layout dan View Cell
 
@@ -261,9 +430,10 @@ Membuat folder layout di dalam app/Views/ dan membuat file main.php sebagai temp
 
 **2. Modifikasi View Dengan Layout**
 
-Mengubah view yang sudah ada untuk menggunakan layout baru dengan menggunakan _$this->extend()_ dan _$this->section()._
+Mengubah view yang sudah ada untuk menggunakan layout baru dengan menggunakan ```$this->extend()``` dan ```$this->section()```
 
 Contoh modifikasi app/Views/home.php:
+```php
 
 <?= $this->extend('layout/main') ?>
 
@@ -276,21 +446,49 @@ Contoh modifikasi app/Views/home.php:
 <p><?= $content; ?></p>
 
 <?= $this->endSection() ?>
+```
 
 ![image](https://github.com/user-attachments/assets/e028d5a8-6979-4170-8747-c8f51fa09f43)
 
 **3. Membuat View Cell**
 
-Membuat folder Cells di dalam app/ dan membuat file ArtikelTerkini.php menggunakan _php spark make:cell ArtikelTerkini_ untuk menampilkan artikel terkini secara dinamis.
+Membuat folder Cells di dalam app/ dan membuat file ArtikelTerkini.php menggunakan ```php spark make:cell ArtikelTerkini``` untuk menampilkan artikel terkini secara dinamis.
 
-![image](https://github.com/user-attachments/assets/ab8a3f27-51f0-493e-b6d8-128c3b46dbd6)
+```php
+<?php
+
+namespace App\Cells;
+
+use App\Models\ArtikelModel;
+use CodeIgniter\View\Cells\Cell;
+
+class ArtikelTerkini extends Cell
+{
+    public function render(): string
+    {
+        $model = new ArtikelModel();
+        $artikel = $model->orderBy('created_at', 'DESC')->limit(5)->findAll();
+
+        return view('components/artikel_terkini', ['artikel' => $artikel]);
+    }
+}
+```
 
 
 **4. Membuat View Component**
 
 Membuat folder components di dalam app/Views/components dan membuat file artikel_terkini.php untuk template artikel terkini.
 
-![image](https://github.com/user-attachments/assets/83fbd0a7-7464-462a-bf5a-2358dbbc55b0)
+```php
+<div class="widget-box">
+    <h3 class="title">Artikel Terkini</h3>
+    <ul>
+        <?php foreach ($artikel as $row): ?>
+            <li><a href="<?= base_url('/artikel/' . $row['slug']) ?>"><?= $row['judul'] ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+```
 
 Setelah implementasi View Layout dan View Cell, tampilan website menjadi lebih terstruktur dan modular:
 
@@ -318,45 +516,194 @@ _CREATE TABLE user (
 
 **2. Membuat Model User**
 
-Membuat file UserModel.php di app/Models/ menggunakan _php spark make:model userModel_ untuk mengelola data user.
+Membuat file UserModel.php di app/Models/ menggunakan ```php spark make:model userModel``` untuk mengelola data user.
 
-![image](https://github.com/user-attachments/assets/fea0387a-081a-44cb-8e9d-3804eeb6db4c)
+```php
+<?php
+namespace App\Models;
+use CodeIgniter\Model;
+
+class UserModel extends Model
+{
+    protected $table = 'user';
+    protected $primaryKey = 'id';
+    protected $useAutoIncrement = true;
+    protected $allowedFields = ['username', 'useremail', 'userpassword'];
+}
+```
 
 **3. Membuat Controller User**
 
-Membuat file User.php di app/Controllers/ menggunakan _php spark make:controller user_ dengan method untuk login dan logout.
+Membuat file User.php di app/Controllers/ menggunakan ```php spark make:controller user``` dengan method untuk login dan logout.
 
-![image](https://github.com/user-attachments/assets/8c0e5513-5936-464e-b57b-40812710519f)
+```php
+<?php
+namespace App\Controllers;
+use App\Models\UserModel;
+
+class User extends BaseController
+{
+    public function index()
+    {
+        $title = 'Daftar User';
+        $model = new UserModel();
+        $users = $model->findAll();
+        return view('user/index', compact('users', 'title'));
+    }
+
+    public function login()
+    {
+        helper(['form']);
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+        
+        if (!$email) {
+            return view('user/login');
+        }
+        
+        $session = session();
+        $model = new UserModel();
+        $login = $model->where('useremail', $email)->first();
+        
+        if ($login) {
+            $pass = $login['userpassword'];
+            if (password_verify($password, $pass)) {
+                $login_data = [
+                    'user_id' => $login['id'],
+                    'user_name' => $login['username'],
+                    'user_email' => $login['useremail'],
+                    'logged_in' => TRUE,
+                ];
+                $session->set($login_data);
+                return redirect('admin/artikel');
+            } else {
+                $session->setFlashdata("flash_msg", "Password salah.");
+                return redirect()->to('/user/login');
+            }
+        } else {
+            $session->setFlashdata("flash_msg", "Email tidak terdaftar.");
+            return redirect()->to('/user/login');
+        }
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('/user/login');
+    }
+}
+```
 
 **4. Membuat View Login**
 
 Membuat direktori user di app/views/ dan membuat file login.php untuk form login.
 
-![image](https://github.com/user-attachments/assets/85d51ebe-9149-4bba-90ff-b7ac03b0a067)
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="<?= base_url('/style.css');?>">
+</head>
+<body>
+    <div id="login-wrapper">
+        <h1>Sign In</h1>
+        <?php if(session()->getFlashdata('flash_msg')):?>
+            <div class="alert alert-danger"><?= session()->getFlashdata('flash_msg') ?></div>
+        <?php endif;?>
+        <form action="" method="post">
+            <div class="mb-3">
+                <label for="InputForEmail" class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control" id="InputForEmail" value="<?= set_value('email') ?>">
+            </div>
+            <div class="mb-3">
+                <label for="InputForPassword" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="InputForPassword">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+```
 
 **5. Membuat Database Seeder**
 
-Membuat seeder untuk data dummy user menggunakan CLI. _php spark make:seeder userSeeder_
+Membuat seeder untuk data dummy user menggunakan CLI. ```php spark make:seeder userSeeder```
 
 kemudian isi file UserSeeder.php :
 
-![image](https://github.com/user-attachments/assets/e34c9ffa-67cf-4d22-843f-b82368481512)
+```php
+<?php
+namespace App\Database\Seeds;
+use CodeIgniter\Database\Seeder;
 
-untuk menjalankan seeder menggunakan command cli : _php spark db:seed UserSeeder_
+class UserSeeder extends Seeder
+{
+    public function run()
+    {
+        $model = model('UserModel');
+        $model->insert([
+            'username' => 'admin',
+            'useremail' => 'admin@email.com',
+            'userpassword' => password_hash('admin123', PASSWORD_DEFAULT),
+        ]);
+    }
+}
+```
+
+untuk menjalankan seeder menggunakan command cli : ```php spark db:seed UserSeeder```
 
 ![image](https://github.com/user-attachments/assets/0c409ded-e900-464e-ab0a-a0c60fdce09b)
 
 **6. Membuat Middleware Auth**
 
-Membuat filter menggunakan _php spark make:filter Auth_ untuk proteksi halaman admin di app/Filters/Auth.php.
+Membuat filter menggunakan ```php spark make:filter Auth``` untuk proteksi halaman admin di app/Filters/Auth.php.
+```php
+<?php 
+namespace App\Filters;
 
-![image](https://github.com/user-attachments/assets/350a7fef-645e-4f96-a59e-b15d4b1ffb74)
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Filters\FilterInterface;
+
+class Auth implements FilterInterface
+{
+    public function before(RequestInterface $request, $arguments = null)
+    {
+        // jika user belum login
+        if(! session()->get('logged_in')){
+            // maka redirect ke halaman login
+            return redirect()->to('/user/login');
+        }
+    }
+
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
+        // Do something here
+    }
+}
+```
 
 **7. Konfigurasi Filter**
 
 tambahkan filter auth yang tadi dengan menambahkan baris **'auth' => App\Filters\Auth::class** ke dalam file App/config/filters.php di bagian aliases
 
-![image](https://github.com/user-attachments/assets/2c6177bb-4bb4-400d-92f0-e6856ee91d48)
+```php
+public array $aliases = [
+        'csrf'          => CSRF::class,
+        'toolbar'       => DebugToolbar::class,
+        'honeypot'      => Honeypot::class,
+        'invalidchars'  => InvalidChars::class,
+        'secureheaders' => SecureHeaders::class,
+        'cors'          => Cors::class,
+        'forcehttps'    => ForceHTTPS::class,
+        'pagecache'     => PageCache::class,
+        'performance'   => PerformanceMetrics::class,
+        'auth'          => \App\Filters\Auth::class,
+    ];
+```
 
 **8. Konfigurasi Routes**
 
