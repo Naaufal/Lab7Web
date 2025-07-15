@@ -8,7 +8,7 @@
 
 ## Daftar Isi
 
-1. [Praktikum 1: Framework Dasar (CRUD)](#praktikum-1-sistem-MVC)
+1. [Praktikum 1: Sistem MVC](#praktikum-1-sistem-MVC)
 2. [Praktikum 2: Framework Lanjutan (CRUD)](#praktikum-2-framework-lanjutan-crud)
 3. [Praktikum 3: View Layout dan View Cell](#praktikum-3-view-layout-dan-view-cell)
 4. [Praktikum 4: Framework Lanjutan (Modul Login)](#praktikum-4-framework-lanjutan-modul-login)
